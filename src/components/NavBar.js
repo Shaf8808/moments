@@ -1,19 +1,77 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import logo from "../assets/logo.png";
 import styles from "../styles/NavBar.module.css";
 import { NavLink } from "react-router-dom";
-import { CurrentUserContext } from "../App";
+import {
+  useCurrentUser,
+  useSetCurrentUser,
+} from "../contexts/CurrentUserContext";
+import Avatar from "./Avatar";
+import axios from "axios";
+import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 
 const NavBar = () => {
-  // use context function, imports currentuser variable from app.js
-  const currentUser = useContext(CurrentUserContext);
+  // use context function, imports currentuser variable from
+  // CurrentUserContext.js
+  const currentUser = useCurrentUser();
+
+  const setCurentUser = useSetCurrentUser();
+
+  // Uses destructuring and references/imports Toggle function in hooks
+  // so it is more re-usable
+  const { expanded, setExpanded, ref } = useClickOutsideToggle();
+
+  const handleSignOut = async () => {
+    try {
+      await axios.post("dj-rest-auth/logout/");
+      setCurentUser(null);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const addPostIcon = (
+    <NavLink
+      className={styles.NavLink}
+      activeClassName={styles.Active}
+      to="/posts/create"
+    >
+      <i className="far fa-plus-square"></i>Add post
+    </NavLink>
+  );
+
   // Displays username if a user is logged in
-  const loggedInIcons = <>{currentUser?.username}</>;
+  const loggedInIcons = (
+    <>
+      <NavLink
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/feed"
+      >
+        <i className="fas fa-stream"></i>Feed
+      </NavLink>
+      <NavLink
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/liked"
+      >
+        <i className="fas fa-heart"></i>Liked
+      </NavLink>
+      <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
+        <i className="fas fa-sign-out-alt"></i>Sign Out
+      </NavLink>
+      <NavLink
+        className={styles.NavLink}
+        to={`/profiles/${currentUser?.profile_id}`}
+      >
+        <Avatar src={currentUser?.profile_image} text="Profile" height={40} />
+      </NavLink>
+    </>
+  );
   // Variable for all links shown if a user is logged out
   const loggedOutIcons = (
     <>
-      {" "}
       <NavLink
         className={styles.NavLink}
         activeClassName={styles.Active}
@@ -32,14 +90,25 @@ const NavBar = () => {
   );
 
   return (
-    <Navbar bg="dark" variant="dark" expand="md" fixed="top">
+    <Navbar
+      expanded={expanded}
+      bg="dark"
+      variant="dark"
+      expand="md"
+      fixed="top"
+    >
       <Container>
         <NavLink to="/">
           <Navbar.Brand>
             <img src={logo} alt="logo" height="45" />
           </Navbar.Brand>
         </NavLink>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        {currentUser && addPostIcon}
+        <Navbar.Toggle
+          ref={ref}
+          onClick={() => setExpanded(!expanded)}
+          aria-controls="basic-navbar-nav"
+        />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto text-left">
             <NavLink
