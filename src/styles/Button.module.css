@@ -35,14 +35,14 @@
 .Blue,
 .BlueOutline:hover,
 .Bright:hover {
-  background-color: #2142b2;
+  background-color: #343a40;
   color: #ffffff;
 }
 
 .BlueOutline,
 .Blue:hover {
   /* border: 1px solid #2142b2; */
-  background-color: #ffffff;
+  background-color: #47c3f8;
   color: #2142b2;
 }
 
