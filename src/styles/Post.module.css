@@ -6,6 +6,15 @@
   text-align: center;
 }
 
+.PostBar {
+  background-color: #343a40;
+  color: #ffffff;
+}
+
+.Link {
+  color: black;
+}
+
 .Post figure,
 h5 {
   margin: 0 0;
