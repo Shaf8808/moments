@@ -63,6 +63,11 @@ i:hover {
   color: #47c3f8;
 }
 
+.SadIcon:hover {
+  color: #555;
+  cursor:auto;
+}
+
 figure {
   text-align: center;
   display: inline-block;
