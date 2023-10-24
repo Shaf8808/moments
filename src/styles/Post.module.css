@@ -1,14 +1,25 @@
 .Post {
   background-color: #ffffff;
   border: 1px solid #dadadf;
-  border-radius: 2px;
+  border-radius: 25px;
   margin-bottom: 16px;
   text-align: center;
 }
 
 .PostBar {
   background-color: #343a40;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
   color: #ffffff;
+}
+
+.PostImage {
+  border-radius: 45px;
+  padding: 1px 15px 15px 15px
+}
+
+.hr {
+  margin-bottom: 0;
 }
 
 .Link {

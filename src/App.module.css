@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 .App {
   font-family: "DM Sans", sans-serif;
   background-color: #f8f8f8;
@@ -25,6 +27,22 @@
   max-height: 40vh;
   max-width: 100%;
   object-fit: contain;
+}
+
+.ProfileHeader {
+  font-family: 'Bebas Neue', sans-serif;;
+  font-size: 2rem;
+  padding-top: 13px;
+}
+
+.ProfileOwner {
+  font-family: 'Bebas Neue', sans-serif;;
+  font-size: 2rem;
+}
+
+.hr {
+  border-color: #ffffff;
+  border-style: inset;
 }
 
 * {
@@ -66,6 +84,12 @@ i:hover {
 .SadIcon:hover {
   color: #555;
   cursor:auto;
+}
+
+.ProfilesTab {
+  background-color: #343a40;
+  color: #ffffff;
+  border-radius: 25px;
 }
 
 figure {
