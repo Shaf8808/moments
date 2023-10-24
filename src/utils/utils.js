@@ -30,3 +30,45 @@ export const fetchMoreData = async (resource, setResource) => {
     }));
   } catch (err) {}
 };
+
+export const followHelper = (profile, clickedProfile, following_id) => {
+  // This is for the profile the user clicked
+  // Updates it's followers count and sets it's following id
+  return profile.id === clickedProfile.id
+    ? {
+        ...profile,
+        followers_count: profile.followers_count + 1,
+        following_id,
+      }
+    : // This is the logged in user's profile
+    // Updates it's following count by 1
+    profile.is_owner
+    ? {
+        ...profile,
+        following_count: profile.following_count + 1,
+      }
+    : // This is not the profile the user clicked or the profile
+      // the user owns, so just leaves it unchanged
+      profile;
+};
+
+export const unfollowHelper = (profile, clickedProfile) => {
+  // This is for the profile the user clicked
+  // Updates it's followers count and sets it's following id
+  return profile.id === clickedProfile.id
+    ? {
+        ...profile,
+        followers_count: profile.followers_count - 1,
+        following_id: null,
+      }
+    : // This is the logged in user's profile
+    // Updates it's following count by 1
+    profile.is_owner
+    ? {
+        ...profile,
+        following_count: profile.following_count - 1,
+      }
+    : // This is not the profile the user clicked or the profile
+      // the user owns, so just leaves it unchanged
+      profile;
+};
