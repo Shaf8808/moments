@@ -15,8 +15,13 @@ import Asset from "../../components/Asset";
 import { Alert, Image } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { axiosReq } from "../../api/axiosDefaults";
+import { useRedirect } from "../../hooks/useRedirect";
 
 function PostCreateForm() {
+  // Redirects logged out users to homepage if they try to
+  // access the post create form
+  useRedirect("loggedOut");
+
   const [errors, setErrors] = useState({});
 
   const [postData, setPostData] = useState({
