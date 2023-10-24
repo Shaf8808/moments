@@ -109,9 +109,10 @@ const Post = (props) => {
             )}
           </div>
         </Media>
+        <hr className={styles.hr} />
       </Card.Body>
       <Link to={`/posts/${id}`}>
-        <Card.Img src={image} alt={title} />
+        <Card.Img className={styles.PostImage} src={image} alt={title} />
       </Link>
       <Card.Body className={styles.PostBar}>
         {/* Only renders the elements <Card.Title> if the title data is present */}
