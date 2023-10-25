@@ -44,7 +44,7 @@ export const ProfileDataProvider = ({ children }) => {
         },
       }));
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -72,7 +72,7 @@ export const ProfileDataProvider = ({ children }) => {
         },
       }));
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -91,7 +91,7 @@ export const ProfileDataProvider = ({ children }) => {
           popularProfiles: data,
         }));
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     handleMount();

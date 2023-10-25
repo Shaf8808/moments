@@ -42,7 +42,7 @@ function PostPage() {
         setPost({ results: [post] });
         setComments(comments);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     // Runs this function everytime the post id changes in the url

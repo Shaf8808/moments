@@ -1,3 +1,4 @@
+import jwtDecode from "jwt-decode";
 import { axiosReq } from "../api/axiosDefaults";
 
 // resource and setResource could be posts and setPosts or
@@ -71,4 +72,23 @@ export const unfollowHelper = (profile, clickedProfile) => {
     : // This is not the profile the user clicked or the profile
       // the user owns, so just leaves it unchanged
       profile;
+};
+
+// Stores the logged in users refresh token in local storage
+export const setTokenTimeStamp = (data) => {
+  // Decodes refresh token. Comes with an expiry date (exp)
+  const refreshTokenTimestamp = jwtDecode(data?.refresh_token).exp;
+  localStorage.setItem("refreshTokenTimestamp", refreshTokenTimestamp);
+};
+
+// Refreshes access token only if timestamp exists
+export const shouldRefreshToken = () => {
+  // The token will be refreshed only for a logged in user
+  return !!localStorage.getItem("refreshTokenTimestamp");
+};
+
+// Removes localstorage value if user logs out or refesh token
+// has expired
+export const removeTokenTimestamp = () => {
+  localStorage.removeItem("refreshTokenTimestamp");
 };

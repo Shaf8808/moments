@@ -16,6 +16,7 @@ import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import { useRedirect } from "../../hooks/useRedirect";
+import { setTokenTimeStamp } from "../../utils/utils";
 
 function SignInForm() {
   // Use context function, imports callback function setCurentuser from
@@ -48,6 +49,9 @@ function SignInForm() {
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
+      // This function extracts expiry date from access token
+      // and saves it in local storage
+      setTokenTimeStamp(data);
       history.goBack();
     } catch (err) {
       setErrors(err.response?.data);

@@ -74,7 +74,7 @@ function PostCreateForm() {
       // Assins a unique post id to the post
       history.push(`/posts/${data.id}`);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // If the error status is NOT a 401 error
       if (error.response?.status !== 401) {
         setErrors(error.response?.data);

@@ -49,7 +49,7 @@ function PostEditForm() {
           : // If the user isn't the post owner, redirects to homepage
             history.push("/");
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
@@ -101,7 +101,7 @@ function PostEditForm() {
       // Redirects to specific post after editing it
       history.push(`/posts/${id}`);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // If the error status is NOT a 401 error
       if (error.response?.status !== 401) {
         setErrors(error.response?.data);

@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { removeTokenTimestamp, shouldRefreshToken } from "../utils/utils";
 
 // Create context function for variable and callback function
 export const CurrentUserContext = createContext();
@@ -23,7 +24,7 @@ export const CurrentUserProvider = ({ children }) => {
       // Callback function
       setCurentUser(data);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -36,19 +37,22 @@ export const CurrentUserProvider = ({ children }) => {
     // Always refreshes access token before making a request
     axiosReq.interceptors.response.use(
       async (config) => {
-        // Refreshes token before sending the request
-        try {
-          await axios.post("/dj-rest-auth/token/refresh/");
-          // If refreshing token fails, it means token has expired
-          // Redirects to sign in page and sets currentUser to null
-        } catch (err) {
-          setCurentUser((prevCurrentUser) => {
-            if (prevCurrentUser) {
-              history.push("/signin");
-            }
-            return null;
-          });
-          return config;
+        if (shouldRefreshToken()) {
+          // Refreshes token before sending the request
+          try {
+            await axios.post("/dj-rest-auth/token/refresh/");
+            // If refreshing token fails, it means token has expired
+            // Redirects to sign in page and sets currentUser to null
+          } catch (err) {
+            setCurentUser((prevCurrentUser) => {
+              if (prevCurrentUser) {
+                history.push("/signin");
+              }
+              return null;
+            });
+            removeTokenTimestamp();
+            return config;
+          }
         }
         return config;
       },
@@ -77,6 +81,7 @@ export const CurrentUserProvider = ({ children }) => {
               }
               return null;
             });
+            removeTokenTimestamp();
           }
           // Exits the interceptor if there is no error after refreshing
           // token
